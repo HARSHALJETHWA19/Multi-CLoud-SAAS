@@ -4,7 +4,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tasks") // Backend port changed to 4000
+    fetch("http://localhost/tasks") // Connect to backend-service
       .then((res) => res.json())
       .then((data) => setTasks(data))
       .catch((err) => console.error("Failed to fetch tasks:", err));

@@ -1,28 +1,18 @@
 const express = require("express");
-const { Pool } = require("pg");
-require("dotenv").config();
 
 const app = express();
 app.use(express.json());
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: 5432,
+// Mock data (no DB)
+const tasks = [
+  { id: 1, name: "Task 1" },
+  { id: 2, name: "Task 2" },
+  { id: 3, name: "Task 3" },
+];
+
+app.get("/tasks", (req, res) => {
+  res.json(tasks);
 });
 
-app.get("/tasks", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM tasks");
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-const PORT = process.env.PORT || 4000; // Changed to 4000
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
