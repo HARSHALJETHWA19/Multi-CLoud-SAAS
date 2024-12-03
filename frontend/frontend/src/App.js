@@ -4,10 +4,16 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost/tasks") // Connect to backend-service
-      .then((res) => res.json())
-      .then((data) => setTasks(data))
-      .catch((err) => console.error("Failed to fetch tasks:", err));
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('/tasks');
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error('Failed to fetch tasks:', error);
+      }
+    };
+    fetchTasks();
   }, []);
 
   return (
